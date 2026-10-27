@@ -1,0 +1,4 @@
+@tailwind base;@tailwind components;@tailwind utilities;
+.btn{@apply rounded-full bg-leaf-600 px-5 py-2 font-semibold text-white hover:bg-leaf-700 focus:outline-none focus:ring-2 focus:ring-leaf-500}
+.card{@apply rounded-2xl bg-white shadow-sm ring-1 ring-black/5}
+.input{@apply w-full rounded-xl border border-gray-200 bg-white px-3 py-2 focus:ring-2 focus:ring-leaf-500 outline-none}
