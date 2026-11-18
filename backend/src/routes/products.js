@@ -32,10 +32,52 @@ function validate(b) { const e = [];
   if (!b.title || b.title.trim().length < 3) e.push("title");
   if (!(Number(b.price) >= 0)) e.push("price");
   if (!["new", "used"].includes(b.condition)) e.push("condition"); return e; }
-r.post("/", requireAuth, requireRole("seller", "admin"), async (req, res) => {
-  const bad = validate(req.body); if (bad.length) return res.status(422).json({ error: "Invalid fields", fields: bad });
-  const { data, error } = await admin.from("products").insert({ ...pick(req.body), status: "active", seller_id: req.user.id }).select().single();
-  if (error) return res.status(400).json({ error: error.message }); res.status(201).json(data);
+r.post("/", requireAuth, async (req, res) => {
+  // Ensure the user has the seller role, auto-assigning if they are a regular user
+  if (!req.user.roles.includes("seller") && !req.user.roles.includes("admin")) {
+    await admin.from("user_roles").upsert(
+      { user_id: req.user.id, role: "seller" },
+      { onConflict: "user_id,role" }
+    );
+    req.user.roles.push("seller");
+  }
+
+  const bad = validate(req.body);
+  if (bad.length) return res.status(422).json({ error: "Invalid fields", fields: bad });
+
+  const record = {
+    ...pick(req.body),
+    seller_id: req.user.id,
+    status: "active",
+    price: Number(req.body.price),
+    condition: req.body.condition || "used",
+    currency: req.body.currency || "USD"
+  };
+
+  if (req.body.category_id) {
+    record.category_id = parseInt(req.body.category_id, 10);
+  }
+
+  const { data, error } = await admin.from("products").insert(record).select().single();
+  if (error) return res.status(400).json({ error: error.message });
+
+  // Handle product images if provided
+  if (req.body.image_url) {
+    await admin.from("product_images").insert({
+      product_id: data.id,
+      image_url: req.body.image_url,
+      sort_order: 0
+    });
+  } else if (Array.isArray(req.body.images) && req.body.images.length > 0) {
+    const imgRows = req.body.images.map((url, idx) => ({
+      product_id: data.id,
+      image_url: url,
+      sort_order: idx
+    }));
+    await admin.from("product_images").insert(imgRows);
+  }
+
+  res.status(201).json(data);
 });
 async function owned(req, res, next) {
   const { data } = await admin.from("products").select("seller_id").eq("id", req.params.id).single();

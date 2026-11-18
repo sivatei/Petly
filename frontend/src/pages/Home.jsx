@@ -68,7 +68,20 @@ export default function Home() {
           <p className="text-gray-500">No listings yet.</p>
         )}
       </section>
-    <section className="card grid gap-4 p-6 md:grid-cols-2"><div><h2 className="text-xl font-bold">Buy & Sell Marketplace</h2><p className="mt-1 text-gray-600">Find or sell new and secondhand pet supplies. Products only — no live animals.</p><Link to="/marketplace" className="btn mt-3 inline-block">Browse marketplace</Link></div>
-      <div><h2 className="text-xl font-bold">Vet Centre</h2><p className="mt-1 text-gray-600">Find clinics by name or city. Chat is for enquiries, not emergencies or diagnosis.</p><Link to="/vet" className="btn mt-3 inline-block">Find a clinic</Link></div></section>
+    <section className="card grid gap-4 p-6 md:grid-cols-2">
+      <div>
+        <h2 className="text-xl font-bold">Buy & Sell Pet Supplies</h2>
+        <p className="mt-1 text-gray-600">Find or sell new and pre-loved pet supplies. Have items your pet outgrew? List them in minutes!</p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <Link to="/shop" className="btn inline-block">Browse Shop</Link>
+          <Link to="/sell" className="rounded-full border border-leaf-600 px-4 py-2 text-sm font-semibold text-leaf-700 hover:bg-leaf-50 transition">+ Sell an Item</Link>
+        </div>
+      </div>
+      <div>
+        <h2 className="text-xl font-bold">Vet Centre</h2>
+        <p className="mt-1 text-gray-600">Find clinics by name or city. Chat is for enquiries, not emergencies or diagnosis.</p>
+        <Link to="/vet" className="btn mt-3 inline-block">Find a clinic</Link>
+      </div>
+    </section>
     <section className="rounded-2xl bg-white p-6 text-sm text-gray-600"><b>Trust & safety:</b> verification badges appear only after admin review. Never pay outside agreed methods; report suspicious listings, users or clinics.</section></div>);
 }

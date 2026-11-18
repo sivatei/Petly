@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
+import { PlusCircle, Sparkles, Tag } from "lucide-react";
 import { api } from "../lib/api";
 import ProductCard from "../components/ProductCard";
 
@@ -11,7 +12,7 @@ const PET_TYPES = [
   { label: "Small Pets", value: "small_pets" }
 ];
 
-export default function Shop({ title, condition }) {
+export default function Shop({ title = "Pet Shop & Supplies", condition }) {
   const [sp, setSp] = useSearchParams();
   const [data, setData] = useState(null);
   const [categories, setCategories] = useState([]);
@@ -39,19 +40,38 @@ export default function Shop({ title, condition }) {
   const page = +(sp.get("page") || 1);
   const selectedCategory = sp.get("category_id") || "";
   const selectedPet = sp.get("pet_type") || "";
+  const selectedCondition = sp.get("condition") || "";
 
   return (
     <div>
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
-        <h1 className="text-2xl font-extrabold">{title}</h1>
-        {(selectedPet || selectedCategory || sp.get("q") || sp.get("min") || sp.get("max")) && (
-          <button
-            className="text-xs font-semibold text-leaf-700 hover:text-leaf-800 underline"
-            onClick={() => setSp({})}
+      {/* Top Header Bar */}
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-extrabold text-gray-900">{title}</h1>
+          <p className="text-xs text-gray-500">
+            Browse new retail products and community pre-loved pet supplies
+          </p>
+        </div>
+
+        <div className="flex items-center gap-2">
+          {(selectedPet || selectedCategory || selectedCondition || sp.get("q") || sp.get("min") || sp.get("max")) && (
+            <button
+              className="text-xs font-semibold text-leaf-700 hover:text-leaf-800 underline mr-1"
+              onClick={() => setSp({})}
+            >
+              Reset all filters
+            </button>
+          )}
+
+          {/* Sell Button */}
+          <Link
+            to="/sell"
+            className="btn flex items-center gap-1.5 shadow-xs"
           >
-            Reset all filters
-          </button>
-        )}
+            <PlusCircle size={16} />
+            <span>Sell an Item</span>
+          </Link>
+        </div>
       </div>
 
       <div className="card mb-6 p-4">
@@ -91,25 +111,17 @@ export default function Shop({ title, condition }) {
             ))}
           </select>
 
-          {/* Min / Max Price */}
-          <div className="flex gap-1.5">
-            <input
-              className="input w-1/2"
-              type="number"
-              min="0"
-              placeholder="Min $"
-              value={sp.get("min") || ""}
-              onChange={e => set("min", e.target.value)}
-            />
-            <input
-              className="input w-1/2"
-              type="number"
-              min="0"
-              placeholder="Max $"
-              value={sp.get("max") || ""}
-              onChange={e => set("max", e.target.value)}
-            />
-          </div>
+          {/* Condition Dropdown Filter */}
+          <select
+            className="input"
+            value={selectedCondition}
+            onChange={e => set("condition", e.target.value)}
+            aria-label="Condition"
+          >
+            <option value="">All Conditions</option>
+            <option value="new">Brand New</option>
+            <option value="used">Pre-Loved / Used</option>
+          </select>
 
           {/* Sort */}
           <select
@@ -124,15 +136,50 @@ export default function Shop({ title, condition }) {
           </select>
         </div>
 
+        {/* Condition Filter Quick Pills */}
+        <div className="mt-3 flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
+          <span className="mr-1 text-xs font-semibold text-gray-500">Condition:</span>
+          <button
+            onClick={() => set("condition", "")}
+            className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+              !selectedCondition
+                ? "bg-leaf-700 text-white shadow-xs"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            All Items
+          </button>
+          <button
+            onClick={() => set("condition", selectedCondition === "new" ? "" : "new")}
+            className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+              selectedCondition === "new"
+                ? "bg-leaf-700 text-white shadow-xs"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            ✨ Brand New
+          </button>
+          <button
+            onClick={() => set("condition", selectedCondition === "used" ? "" : "used")}
+            className={`rounded-full px-3 py-1 text-xs font-medium transition ${
+              selectedCondition === "used"
+                ? "bg-amber-600 text-white shadow-xs"
+                : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+            }`}
+          >
+            🤝 Pre-Loved / Secondhand
+          </button>
+        </div>
+
         {/* Quick Category Badges */}
         {categories.length > 0 && (
-          <div className="mt-3.5 flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-3">
+          <div className="mt-2.5 flex flex-wrap items-center gap-1.5 border-t border-gray-100 pt-2.5">
             <span className="mr-1 text-xs font-semibold text-gray-500">Categories:</span>
             <button
               onClick={() => set("category_id", "")}
               className={`rounded-full px-3 py-1 text-xs font-medium transition ${
                 !selectedCategory
-                  ? "bg-leaf-600 text-white shadow-sm"
+                  ? "bg-leaf-600 text-white shadow-xs"
                   : "bg-gray-100 text-gray-700 hover:bg-gray-200"
               }`}
             >
@@ -146,7 +193,7 @@ export default function Shop({ title, condition }) {
                   onClick={() => set("category_id", active ? "" : String(c.id))}
                   className={`rounded-full px-3 py-1 text-xs font-medium transition ${
                     active
-                      ? "bg-leaf-600 text-white shadow-sm"
+                      ? "bg-leaf-600 text-white shadow-xs"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
@@ -159,7 +206,7 @@ export default function Shop({ title, condition }) {
       </div>
 
       {err && <p role="alert" className="text-red-600">{err}</p>}
-      {!data && !err && <p>Loading…</p>}
+      {!data && !err && <p className="text-gray-500 py-6">Loading products…</p>}
 
       {data && (
         data.items.length ? (
@@ -170,19 +217,29 @@ export default function Shop({ title, condition }) {
           </div>
         ) : (
           <div className="rounded-2xl border border-dashed border-gray-300 p-12 text-center text-gray-500">
-            <p className="text-base font-medium">No products match your filters.</p>
-            <button
-              className="mt-3 text-xs font-semibold text-leaf-700 underline"
-              onClick={() => setSp({})}
-            >
-              Clear filters and view all
-            </button>
+            <Tag size={36} className="mx-auto text-gray-400 mb-2" />
+            <p className="text-base font-semibold text-gray-800">No products match your current filters.</p>
+            <p className="mt-1 text-xs text-gray-500">Try resetting your filters or list the first one yourself!</p>
+            <div className="mt-4 flex justify-center gap-3">
+              <button
+                className="btn text-xs"
+                onClick={() => setSp({})}
+              >
+                Clear all filters
+              </button>
+              <Link
+                to="/sell"
+                className="rounded-full border border-leaf-600 px-4 py-2 text-xs font-semibold text-leaf-700 hover:bg-leaf-50"
+              >
+                + List an Item
+              </Link>
+            </div>
           </div>
         )
       )}
 
       {data && (
-        <div className="mt-6 flex justify-center gap-3">
+        <div className="mt-8 flex justify-center gap-3">
           <button
             disabled={page <= 1}
             className="btn disabled:opacity-40"

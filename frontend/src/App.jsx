@@ -1,7 +1,8 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Header from './components/Header';
 import Home from './pages/Home';
 import Shop from './pages/Shop';
+import Sell from './pages/Sell';
 import Product from './pages/Product';
 import Vet from './pages/Vet';
 import VetDetail from './pages/VetDetail';
@@ -18,8 +19,9 @@ export default function App() {
       <main className="mx-auto max-w-6xl px-4 py-6">
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/shop" element={<Shop title="Pet Shop" />} />
-          <Route path="/marketplace" element={<Shop title="Marketplace" condition="used" />} />
+          <Route path="/shop" element={<Shop title="Pet Shop & Supplies" />} />
+          <Route path="/marketplace" element={<Navigate to="/shop?condition=used" replace />} />
+          <Route path="/sell" element={<Sell />} />
           <Route path="/product/:id" element={<Product />} />
           <Route path="/vet" element={<Vet />} />
           <Route path="/vet/:id" element={<VetDetail />} />
