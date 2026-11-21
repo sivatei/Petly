@@ -18,7 +18,9 @@ import { useAuth } from "../lib/auth";
 const links = [
   ["/", "Home"],
   ["/shop", "Shop"],
-  ["/vet", "Vet Centre"]
+  ["/vet", "Vet Centre"],
+  ["/about", "About Us"],
+  ["/help", "Help & FAQ"]
 ];
 
 export default function Header() {
