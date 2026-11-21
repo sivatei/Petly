@@ -11,9 +11,7 @@ import {
   LogOut,
   ChevronDown,
   ShoppingBag,
-  Shield,
-  PlusCircle,
-  Tag
+  Shield
 } from "lucide-react";
 import { useAuth } from "../lib/auth";
 
@@ -82,16 +80,6 @@ export default function Header() {
 
         {/* Right Action Icons & User Account */}
         <div className="ml-auto flex items-center gap-2 sm:gap-3 text-gray-700">
-          {/* Sell Button */}
-          <Link
-            to="/sell"
-            className="flex items-center gap-1.5 rounded-full bg-leaf-600 px-3.5 py-1.5 text-xs font-bold text-white shadow-xs transition hover:bg-leaf-700 hover:shadow"
-            title="List an item for sale"
-          >
-            <PlusCircle size={15} />
-            <span>Sell</span>
-          </Link>
-
           {user ? (
             <>
               {/* Messages Link */}
@@ -159,15 +147,6 @@ export default function Header() {
 
                     {/* Menu Navigation Links */}
                     <div className="py-1 text-sm text-gray-700">
-                      <Link
-                        to="/sell"
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-4 py-2 font-semibold text-leaf-700 hover:bg-leaf-50 hover:text-leaf-800"
-                      >
-                        <Tag size={16} className="text-leaf-600" />
-                        <span>List an Item for Sale</span>
-                      </Link>
-
                       <Link
                         to="/account"
                         onClick={() => setUserDropdownOpen(false)}
@@ -240,15 +219,6 @@ export default function Header() {
       {mobileMenuOpen && (
         <nav className="border-t border-gray-100 bg-white px-4 py-3 md:hidden space-y-1">
           {navLinks}
-          <div className="pt-2">
-            <Link
-              to="/sell"
-              onClick={() => setMobileMenuOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 text-sm font-bold text-leaf-800 bg-leaf-100 rounded-lg"
-            >
-              <PlusCircle size={16} className="text-leaf-700" /> + List an Item for Sale
-            </Link>
-          </div>
           {user && (
             <div className="border-t border-gray-100 pt-2 mt-2 space-y-1">
               <Link
