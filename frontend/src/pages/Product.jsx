@@ -35,14 +35,14 @@ export default function Product() {
           <p className="mt-2 text-2xl font-bold text-leaf-700">{p.currency || "$"}{Number(p.price).toFixed(2)}</p>
           <div className="mt-2 flex flex-wrap items-center gap-2 text-xs text-gray-500">
             <span className={`rounded-full px-2.5 py-0.5 font-bold ${p.condition === "used" ? "bg-amber-100 text-amber-800" : "bg-leaf-100 text-leaf-800"}`}>
-              {p.condition === "used" ? "🤝 Pre-Loved / Secondhand" : "✨ Brand New"}
+              {p.condition === "used" ? "Pre-Loved / Secondhand" : "Brand New"}
             </span>
             <span>·</span>
             <span>Seller: {p.profiles?.full_name || "Community Seller"}</span>
             {p.location && (
               <>
                 <span>·</span>
-                <span>📍 {p.location}</span>
+                <span>{p.location}</span>
               </>
             )}
           </div>

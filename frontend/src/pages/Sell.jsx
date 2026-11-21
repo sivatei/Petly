@@ -234,7 +234,7 @@ export default function Sell() {
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-gray-900">🤝 Pre-Loved / Used</span>
+                  <span className="font-bold text-gray-900">Pre-Loved / Used</span>
                   {condition === "used" && <CheckCircle2 size={16} className="text-amber-600" />}
                 </div>
                 <span className="mt-1 text-xs text-gray-500">
@@ -252,7 +252,7 @@ export default function Sell() {
                 }`}
               >
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-gray-900">✨ Brand New</span>
+                  <span className="font-bold text-gray-900">Brand New</span>
                   {condition === "new" && <CheckCircle2 size={16} className="text-leaf-600" />}
                 </div>
                 <span className="mt-1 text-xs text-gray-500">

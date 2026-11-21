@@ -86,7 +86,7 @@ export default function Vet() {
               disabled={locating}
             >
               <Navigation size={16} />
-              {locating ? "Locating…" : (geo ? "📍 Nearby Active" : "Near Me")}
+              {locating ? "Locating…" : (geo ? "Nearby Active" : "Near Me")}
             </button>
           </div>
         </div>
@@ -169,7 +169,7 @@ export default function Vet() {
 
                     {c.distance_km != null && (
                       <span className="rounded-md bg-gray-100 px-2 py-0.5 text-xs font-semibold text-gray-600">
-                        📍 {c.distance_km} km away
+                        {c.distance_km} km away
                       </span>
                     )}
                   </div>

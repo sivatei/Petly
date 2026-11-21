@@ -25,7 +25,7 @@ export default function ProductCard({ p }) {
               : "bg-leaf-700/90 text-white"
           }`}
         >
-          {p.condition === "used" ? "🤝 Pre-Loved" : "✨ New"}
+          {p.condition === "used" ? "Pre-Loved" : "Brand New"}
         </span>
       </div>
 

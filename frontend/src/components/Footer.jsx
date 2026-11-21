@@ -32,7 +32,7 @@ export default function Footer() {
                 <Link to="/shop?condition=new" className="hover:text-leaf-700 transition">Brand New Items</Link>
               </li>
               <li>
-                <Link to="/shop?condition=used" className="hover:text-leaf-700 transition">🤝 Pre-Loved & Secondhand</Link>
+                <Link to="/shop?condition=used" className="hover:text-leaf-700 transition">Pre-Loved & Secondhand</Link>
               </li>
               <li>
                 <Link to="/sell" className="font-semibold text-leaf-700 hover:text-leaf-800 transition">+ List an Item for Sale</Link>

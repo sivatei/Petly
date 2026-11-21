@@ -157,7 +157,7 @@ export default function Shop({ title = "Pet Shop & Supplies", condition }) {
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
             }`}
           >
-            ✨ Brand New
+            Brand New
           </button>
           <button
             onClick={() => set("condition", selectedCondition === "used" ? "" : "used")}
@@ -167,7 +167,7 @@ export default function Shop({ title = "Pet Shop & Supplies", condition }) {
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
             }`}
           >
-            🤝 Pre-Loved / Secondhand
+            Pre-Loved / Secondhand
           </button>
         </div>
 
