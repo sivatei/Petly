@@ -72,7 +72,7 @@ export default function About() {
           Discover quality pet supplies or find a verified vet near you today.
         </p>
         <div className="flex flex-wrap justify-center gap-3 pt-2">
-          <Link to="/shop" className="rounded-full bg-white px-6 py-2.5 text-sm font-bold text-leaf-800 shadow-md hover:bg-leaf-50 transition">
+          <Link to="/shop" className="rounded-full bg-white px-6 py-2.5 text-sm font-extrabold text-leaf-800 shadow-md hover:bg-leaf-50 hover:text-leaf-900 transition">
             Explore Shop
           </Link>
           <Link to="/vet" className="rounded-full border border-white/40 px-6 py-2.5 text-sm font-bold text-white hover:bg-white/10 transition">
